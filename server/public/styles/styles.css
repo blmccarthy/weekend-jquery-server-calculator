@@ -2,6 +2,23 @@
     font-family: Helvetica, Arial, sans-serif;
 }
 
-h1 {
-    background-color: blanchedalmond;
+body {
+    padding: 20px;
+}
+
+hr {
+    margin: 20px 0px 20px 0px;
+}
+
+button {
+    height: 50px;
+    width: 50px;
+    margin: 3px;
+}
+
+input {
+    height: 45px;
+    width: 163px;
+    margin: 3px;
+
 }
