@@ -31,26 +31,29 @@ let result = 0;
 
 app.get('/answer', function (req, res) {
     console.log('in answer .get');
-    res.send(result)
-})
-
+    console.log('in /answer- result:', result);
+    
+    res.send(mathHistory)
+});
 
 
 //// POST ROUTES //// --------------------------------------------
 
 
 app.post('/sendInputs', function(req, res){
-    console.log('in server POST /sendInputs');
-    console.log('req.body:', req.body);
-    // req.body.result = solveEquation(req.body);
-
-    parseArray(req.body.equationArray);
-
-    // mathHistory.push(req.body)
-    // console.log('math History', mathHistory);
-    // res.send(mathHistory)
-    // res.send('420');
-})
+    console.log('in server POST /sendInputs', req.body);
+    // Parses response
+    parsedEquationArray = parseArray(req.body.equationArray);
+    // Solves equation in parsed Array
+    result = solveEquation(parsedEquationArray);
+    // Push result to parsedEquationArray
+    parsedEquationArray.push(result)
+    // Push complete equation to mathHistory
+    mathHistory.push(parsedEquationArray)
+    console.log('mathHistory:', mathHistory);
+    // Post Successful Code
+    res.sendStatus(201);
+});
 
 
 
@@ -81,14 +84,15 @@ function parseArray(arr){
             iC++;
         }    
     }
-    result = solveEquation(parsedEquationArray);
-    console.log('result:', result);
-    
+    return parsedEquationArray
 } // end parseArray
 
 
 
 function solveEquation(arr){
+    console.log('in solveEquation');
+    
+
     // even indexes converted from string to number
     for (i = 0; i < arr.length; i++){
         if (i % 2 === 0){
