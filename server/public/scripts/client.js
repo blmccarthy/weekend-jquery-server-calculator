@@ -76,70 +76,111 @@ function sendInputs(){
 // Number Button Functions
 
 function click0(){
-    equationArray.push(0);
+    equationArray.push({
+        digit: 0,
+        type: 'number'
+    });
     $('#input-equation').val($('#input-equation').val() + '0');
 }
 function click1(){
-    equationArray.push(1);
+    equationArray.push({
+        digit: 1,
+        type: 'number'
+    });
     $('#input-equation').val($('#input-equation').val() + '1');
 }
 function click2(){
-    equationArray.push(2);
+    equationArray.push({
+        digit: 2,
+        type: 'number'
+    });
     $('#input-equation').val($('#input-equation').val() + '2');
 }
 function click3(){
-    equationArray.push(3);
+    equationArray.push({
+        digit: 3,
+        type: 'number'
+    });
     $('#input-equation').val($('#input-equation').val() + '3');
 }
 function click4(){
-    equationArray.push(4);
+    equationArray.push({
+        digit: 4,
+        type: 'number'
+    });
     $('#input-equation').val($('#input-equation').val() + '4');
 }
 function click5(){
-    equationArray.push(5);
+    equationArray.push({
+        digit: 5,
+        type: 'number'
+    });
     $('#input-equation').val($('#input-equation').val() + '5');
 }
 function click6(){
-    equationArray.push(6);
+    equationArray.push({
+        digit: 6,
+        type: 'number'
+    });
     $('#input-equation').val($('#input-equation').val() + '6');
 }
 function click7(){
-    equationArray.push(7);
+    equationArray.push({
+        digit: 7,
+        type: 'number'
+    });
     $('#input-equation').val($('#input-equation').val() + '7');
 }
 function click8(){
-    equationArray.push(8);
+    equationArray.push({
+        digit: 8,
+        type: 'number'
+    });
     $('#input-equation').val($('#input-equation').val() + '8');
 }
 function click9(){
-    equationArray.push(9);
+    equationArray.push({
+        digit: 9,
+        type: 'number'
+    });
     $('#input-equation').val($('#input-equation').val() + '9');
 }
 
 // Operator Button Functions
 
 function clickAdd(){
-    operator = '+';
-    equationArray.push('+');
+    equationArray.push({
+        digit: '+',
+        type: 'operator'
+    });
     $('#input-equation').val($('#input-equation').val() + ' + ');
 }
 function clickSubtract(){
-    operator = '-';
-    equationArray.push('-');
+    equationArray.push({
+        digit: '-',
+        type: 'operator'
+    });
     $('#input-equation').val($('#input-equation').val() + ' - ');
 }
 function clickMultiply(){
-    operator = '*';
-    equationArray.push('*');
+    equationArray.push({
+        digit: '*',
+        type: 'operator'
+    });
     $('#input-equation').val($('#input-equation').val() + ' * ');
 }
 function clickDivide(){
-    operator = '/';
-    equationArray.push('/');
+    equationArray.push({
+        digit: '/',
+        type: 'operator'
+    });
     $('#input-equation').val($('#input-equation').val() + ' / ');
 }
 function clickDecimal(){
-    equationArray.push('.');
+    equationArray.push({
+        digit: '.',
+        type: 'number'
+    });
     $('#input-equation').val($('#input-equation').val() + '.');
 }
 
