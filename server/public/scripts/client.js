@@ -8,19 +8,8 @@ function readyNow(){
     $('#btn-divide').on('click', selectDivide);
     
     $('#btn-equals').on('click', sendInputs);
-    // $('#btn-clear').on('click', clearInputs);
+    $('#btn-clear').on('click', clearInputs);
 }
-
-// function test(){ ///////////////////////////
-//     $.ajax({                        
-//         method: 'GET',
-//         url: '/test'
-//     }).then(function(response){     // What to do after server responds to our request (if successful)
-//         console.log('test .then success!');
-//     }).catch(function(response){    // If Server sends error, .catch() tells it how to handle it
-//         console.log('test .get failed', response);
-//     })        
-// }
 
 
 //// GLOBAL VARS //// -------------------------------------------
@@ -95,4 +84,9 @@ function renderToDom(res){
     for (let num of res){
         $('#math-history').append(`<li>${num.num1} ${num.operator} ${num.num2} = ${num.result}</li>`)
     }
+}
+
+function clearInputs() {
+    $('#input-num1').val('');
+    $('#input-num2').val('');
 }
