@@ -23,6 +23,10 @@ function readyNow(){
     $('#btn-9').on('click', click9)
 }
 
+let arr = [[2, 4],[6, 8]];
+let arrFlat = arr.flat();
+console.log('arrFlat:', arrFlat);
+
 
 //// GLOBAL VARS //// -------------------------------------------
 
@@ -186,21 +190,25 @@ function clickDecimal(){
 
 function clickClear() {
     $('#input-equation').val('');
-    equationArray = '';
+    equationArray = [];
+    console.log('equationArray', equationArray);
+    
 }
 // #endregion
 
 function renderToDom(res){
     console.log('in renderToDom');
-    console.log('res:', res);
     
-    $('#result').empty();
-    // $('#result').append(res[res.length-1][res.length-1]);
-    console.log('response', res[res.length-1][res.length]);
-    
-    $('#math-history').empty();
+    // Grabs the last value in the flat array (aka: latest result)
+    latestResult = res.flat()[res.flat().length-1]    
 
-    for (let num of res){
-        $('#math-history').append(`<li>${num[0]} ${num[1]} ${num[2]} = ${num[3]}</li>`);
+    // empty result & append latest result
+    $('#result').empty();
+    $('#result').append(latestResult);
+    
+    // empty math history list & re-append updated history list
+    $('#math-history').empty();
+    for (let index of res){
+        $('#math-history').append(`<li>${index[0]} ${index[1]} ${index[2]}</li>`);
     }
 }
