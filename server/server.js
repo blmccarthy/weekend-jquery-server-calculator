@@ -24,15 +24,9 @@ let result = 0;
 //// GET ROUTES //// --------------------------------------------
 
 
-// app.get('/test', function(req, res) {
-//     console.log('in test .get');
-//     res.send('test');
-// })
-
 app.get('/answer', function (req, res) {
     console.log('in answer .get');
-    console.log('in /answer- result:', result);
-    
+    // Send full mathHistory Array
     res.send(mathHistory)
 });
 
@@ -51,16 +45,15 @@ app.post('/sendInputs', function(req, res){
     // Push complete equation to mathHistory
     mathHistory.push(parsedEquationArray)
     console.log('mathHistory:', mathHistory);
-    // Post Successful Code
+    // Push Successful Code
     res.sendStatus(201);
 });
 
 app.post('/retrieveHistItem', function(req, res){
     console.log('in /retrieveHistItem POST');
+    // Retrieves equation to send back to Client and display result
     let index = req.body.equationToRetrieve
-    
-    console.log(mathHistory[index]);
-    res.send(mathHistory[index]);
+        res.send(mathHistory[index]);
 });
 
 
@@ -69,6 +62,7 @@ app.post('/retrieveHistItem', function(req, res){
 
 app.delete('/deleteHistory', function(req, res){
     console.log('in /deleteHistory DELETE');
+    // Empties mathHistory array
     mathHistory = [];
     res.send(mathHistory)
 });
@@ -90,7 +84,7 @@ function parseArray(arr){
         }
         // appends number digits to same index until a object.type:operator is found
         // example: '1' >>> '10' >>> '100'
-        if (object.type === 'number'){
+        if (object.type === 'number' || object.type === 'decimal'){
             parsedEquationArray[iC] += object.digit;
         }
         // operators are pushed to their own index

@@ -27,6 +27,8 @@ function readyNow(){
 
     // History li Click Handler
     $('ul').on('click', 'li', clickHistoryItem);
+
+    receiveAnswer()
 }
 
 
@@ -37,9 +39,10 @@ let equationArray = [];
 
 //// GET ROUTES //// --------------------------------------------
 
+
+// Simply receives full history of equations and appends to DOM
 function receiveAnswer(){
     console.log('in receiveAnswer GET');
-
     $.ajax({
         method: 'GET',
         url: '/answer',
@@ -56,11 +59,10 @@ function receiveAnswer(){
 
 function sendInputs(){
     console.log('sendInputs clicked');
-    console.log('equationArray:', equationArray);
     
     // Ensure's equation is valid before sending to server
     if (inputValidation() === false){
-        return alert('Please ensure you entered a valid equation!');
+        return alert('Stop trying to break my my calculator 😡😡😡');
     }
 
     $.ajax({
@@ -75,12 +77,14 @@ function sendInputs(){
     }).catch(function(response){
         console.log('sendInputs .catch POST', response);
     });
-}
+} // end sendInputs
 
 function clickHistoryItem(){
-    console.log('this:', $(this)[0].dataset.index)
+    // Grabs index of <li> to correlate with array object on server
     equationToRetrieve = $(this)[0].dataset.index
-    console.log(equationToRetrieve);
+
+    $('*').removeClass('selected');
+    $(this).addClass('selected');
     
 
     $.ajax({
@@ -96,7 +100,7 @@ function clickHistoryItem(){
     }).catch(function(res){
         console.log('retrieveHistItem .catch POST', response);
     });
-}
+} // end clickHistoryItem
 
 
 //// DELETE ROUTES //// ------------------------------------------
@@ -203,6 +207,7 @@ function clickAdd(){
     });
     $('#input-equation').val($('#input-equation').val() + ' + ');
     disableOperators()
+    enableDecimal()
 }
 function clickSubtract(){
     equationArray.push({
@@ -211,6 +216,7 @@ function clickSubtract(){
     });
     $('#input-equation').val($('#input-equation').val() + ' - ');
     disableOperators()
+    enableDecimal()
 }
 function clickMultiply(){
     equationArray.push({
@@ -219,6 +225,7 @@ function clickMultiply(){
     });
     $('#input-equation').val($('#input-equation').val() + ' * ');
     disableOperators()
+    enableDecimal()
 }
 function clickDivide(){
     equationArray.push({
@@ -227,13 +234,15 @@ function clickDivide(){
     });
     $('#input-equation').val($('#input-equation').val() + ' / ');
     disableOperators()
+    enableDecimal()
 }
 function clickDecimal(){
     equationArray.push({
         digit: '.',
-        type: 'number'
+        type: 'decimal'
     });
     $('#input-equation').val($('#input-equation').val() + '.');
+    disableDecimal()
 }
 
 function clickClear() {
@@ -241,6 +250,7 @@ function clickClear() {
     $('#input-equation').val('');
     equationArray = [];
     enableOperators()
+    enableDecimal()
 }
 
 function disableOperators(){
@@ -257,6 +267,14 @@ function enableOperators(){
     $('#btn-divide').prop('disabled', false);
 }
 
+function disableDecimal(){
+    $('#btn-decimal').prop('disabled', true);
+}
+
+function enableDecimal(){
+    $('#btn-decimal').prop('disabled', false);
+}
+
 // #endregion
 
 
@@ -264,21 +282,20 @@ function renderToDom(res){
     console.log('in renderToDom');
     console.log('res:', res);
     
+    // Renders ONLY the result
     renderResult(res)
-    // // Grabs the last value in the flat array (aka: latest result)
-    // latestResult = res.flat()[res.flat().length-1]    
-
-    // // empty result & append latest result
-    // $('#result').empty();
-    // $('#result').append(latestResult);
     
-    // empty math history list & re-append updated history list
+    // Renders ONLY the History
     $('#math-history').empty();
-    // for (let index of res){
     for (i = 0; i < res.length; i++){
         $('#math-history').prepend(`<li data-index="${i}">${res[i][0]} ${res[i][1]} ${res[i][2]}</li>`);
+        // Adds 'selected' styling to latest equation
+        if ( i === res.length-1){            
+            $(`[data-index="${i}"]`).addClass('selected');
+        }
     }
-}
+} // end renderToDom
+
 
 function renderResult(res){
     // Grabs the last value in the flat array (aka: latest result)
@@ -287,13 +304,13 @@ function renderResult(res){
     // empty result & append latest result
     $('#result').empty();
     $('#result').append(latestResult);
-}
+} // end renderResult
 
 function inputValidation(){
     let num1Exist = false;      // does 1st num exist?
     let operatorExist = false;  // does operator exist?
-    let num2Exist = false;      // does 2nd num exist AFTER operator?
-    let operatorIndex = 0;
+    let num2Exist = false;      // is last num in array a number?
+
     // Validates 1st digit in array is a number
     if (equationArray[0].type === 'number'){
         num1Exist = true;
@@ -302,11 +319,10 @@ function inputValidation(){
     for (let i = 0; i < equationArray.length; i++){
         if (equationArray[i].type === 'operator'){
             operatorExist = true;
-            operatorIndex = i;
         }
     }
-    // Validates that the operator isn't LAST digit in array
-    if (operatorIndex < equationArray.length-1){        
+    // Validates that the final digit is a number
+    if (equationArray[equationArray.length-1].type === 'number'){        
         num2Exist = true;
     }
     // Validates that ALL validations are true
@@ -316,4 +332,4 @@ function inputValidation(){
         console.log(num1Exist, operatorExist, num2Exist);
         return false;
     }
-}
+} // end inputValidation

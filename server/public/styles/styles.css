@@ -90,16 +90,21 @@ li {
 
 #btn-clear-history {
     height: auto;
-    width: 200px;
+    width: 333px;
     padding: 10px;
 }
 
 #history-container {
     display: inline-block;
-    width: 290px;
+    width: 333px;
     padding: 10px 0px 0px 20px;
     position: absolute;
     top: 20px;
 }
 
 /* .class Styles ----------------------------------------- */
+
+.selected {
+    background-color: #c8ccbc;
+    border-radius: 10px;
+}
