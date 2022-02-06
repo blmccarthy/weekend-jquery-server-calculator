@@ -1,3 +1,9 @@
+
+
+/* General Styles ----------------------------------------- */
+
+
+
 @font-face {
     font-family: 'digital-7';
     src: url('../fonts/digital-7.ttf');
@@ -7,8 +13,19 @@
     font-family: Helvetica, Arial, sans-serif;
 }
 
+
+
+/* Element Styles ----------------------------------------- */
+
+
+
 body {
     padding: 20px;
+}
+
+h1 {
+    display: inline-block;
+    font-weight: 300;
 }
 
 hr {
@@ -33,6 +50,16 @@ input, textarea {
     font-size: 28px;
   }
 
+li {
+    font-family: 'digital-7';
+    font-size: 30px;
+    padding: 10px;
+}
+
+/* #id Styles ----------------------------------------- */
+
+
+
 #calc-inner {
     margin: 20px;
     text-align: center;
@@ -44,6 +71,7 @@ input, textarea {
     border-radius: 15px;
     width: 290px;
     margin: auto;
+    display:inline-block;
 }
 
 #calc-title {
@@ -55,8 +83,23 @@ input, textarea {
     border-bottom: 2px solid #c8ccbc;
 }
 
+#result {
+    font-family: 'digital-7';
+    font-size: 50px;
+}
+
 #btn-clear-history {
     height: auto;
-    width: auto;
-    padding: 15px;
+    width: 200px;
+    padding: 10px;
 }
+
+#history-container {
+    display: inline-block;
+    width: 290px;
+    padding: 10px 0px 0px 20px;
+    position: absolute;
+    top: 20px;
+}
+
+/* .class Styles ----------------------------------------- */

@@ -55,6 +55,14 @@ app.post('/sendInputs', function(req, res){
     res.sendStatus(201);
 });
 
+app.post('/retrieveHistItem', function(req, res){
+    console.log('in /retrieveHistItem POST');
+    let index = req.body.equationToRetrieve
+    
+    console.log(mathHistory[index]);
+    res.send(mathHistory[index]);
+});
+
 
 //// DELETE ROUTES //// ------------------------------------------
 

@@ -25,6 +25,8 @@ function readyNow(){
     $('#btn-clear').on('click', clickClear);
     $('#btn-clear-history').on('click', clickClearHistory);
 
+    // History li Click Handler
+    $('ul').on('click', 'li', clickHistoryItem);
 }
 
 
@@ -50,8 +52,6 @@ function receiveAnswer(){
 }
 
 
-
-
 //// POST ROUTES //// --------------------------------------------
 
 function sendInputs(){
@@ -74,6 +74,27 @@ function sendInputs(){
         receiveAnswer();
     }).catch(function(response){
         console.log('sendInputs .catch POST', response);
+    });
+}
+
+function clickHistoryItem(){
+    console.log('this:', $(this)[0].dataset.index)
+    equationToRetrieve = $(this)[0].dataset.index
+    console.log(equationToRetrieve);
+    
+
+    $.ajax({
+        method: 'POST',             // Type of request
+        url: '/retrieveHistItem',   // Route we will match on
+        data: {                     // Must be an object
+            equationToRetrieve,
+        }
+    }).then(function(res) {
+        console.log('retrieveHistItem .then POST');
+        console.log('res:', res);
+        renderResult(res)
+    }).catch(function(res){
+        console.log('retrieveHistItem .catch POST', response);
     });
 }
 
@@ -243,19 +264,29 @@ function renderToDom(res){
     console.log('in renderToDom');
     console.log('res:', res);
     
+    renderResult(res)
+    // // Grabs the last value in the flat array (aka: latest result)
+    // latestResult = res.flat()[res.flat().length-1]    
+
+    // // empty result & append latest result
+    // $('#result').empty();
+    // $('#result').append(latestResult);
     
+    // empty math history list & re-append updated history list
+    $('#math-history').empty();
+    // for (let index of res){
+    for (i = 0; i < res.length; i++){
+        $('#math-history').prepend(`<li data-index="${i}">${res[i][0]} ${res[i][1]} ${res[i][2]}</li>`);
+    }
+}
+
+function renderResult(res){
     // Grabs the last value in the flat array (aka: latest result)
     latestResult = res.flat()[res.flat().length-1]    
 
     // empty result & append latest result
     $('#result').empty();
     $('#result').append(latestResult);
-    
-    // empty math history list & re-append updated history list
-    $('#math-history').empty();
-    for (let index of res){
-        $('#math-history').prepend(`<li>${index[0]} ${index[1]} ${index[2]}</li>`);
-    }
 }
 
 function inputValidation(){
