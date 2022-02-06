@@ -56,6 +56,15 @@ app.post('/sendInputs', function(req, res){
 });
 
 
+//// DELETE ROUTES //// ------------------------------------------
+
+
+app.delete('/deleteHistory', function(req, res){
+    console.log('in /deleteHistory DELETE');
+    mathHistory = [];
+    res.sendStatus(201)
+    
+});
 
 //// HELPER FUNCTIONS //// ---------------------------------------
 
@@ -92,8 +101,7 @@ function parseArray(arr){
 function solveEquation(arr){
     console.log('in solveEquation');
     
-
-    // even indexes converted from string to number
+    // even # indexes converted from string to number
     for (i = 0; i < arr.length; i++){
         if (i % 2 === 0){
             arr[i] = parseFloat(arr[i])
@@ -128,4 +136,3 @@ function solveEquation(arr){
 app.listen(PORT, () => {
     console.log ('Server is running on port', PORT)
   })
-  

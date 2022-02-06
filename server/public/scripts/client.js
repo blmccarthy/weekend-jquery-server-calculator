@@ -7,7 +7,6 @@ function readyNow(){
     $('#btn-multiply').on('click', clickMultiply);
     $('#btn-divide').on('click', clickDivide);
     $('#btn-decimal').on('click', clickDecimal);
-    $('#btn-clear').on('click', clickClear);
     $('#btn-equals').on('click', sendInputs);
 
     // Number button click handlers
@@ -21,6 +20,11 @@ function readyNow(){
     $('#btn-7').on('click', click7)
     $('#btn-8').on('click', click8)
     $('#btn-9').on('click', click9)
+
+    // Clear Buttons
+    $('#btn-clear').on('click', clickClear);
+    $('#btn-clear-history').on('click', clickClearHistory);
+
 }
 
 let arr = [[2, 4],[6, 8]];
@@ -54,10 +58,13 @@ function receiveAnswer(){
 
 //// POST ROUTES //// --------------------------------------------
 
-
 function sendInputs(){
     console.log('sendInputs clicked');
-    console.log('equationArray', equationArray);
+
+    
+    for (let i of equationArray){
+
+    }
 
     $.ajax({
         method: 'POST',     // Type of request
@@ -74,7 +81,25 @@ function sendInputs(){
 }
 
 
-//// HELPER FUNCTIONS //// ------------------------
+//// DELETE ROUTES //// ------------------------------------------
+
+function clickClearHistory(){
+    console.log('clear History clicked');
+    
+    $.ajax({
+        method: 'DELETE',     
+        url: '/deleteHistory' 
+    }).then(function(res) {
+        console.log('deleteHistory .then DELETE');
+        renderToDom(res)
+    }).catch(function(res){
+        console.log('deleteHistory .catch DELETE', res);
+    });
+}
+
+
+//// HELPER FUNCTIONS //// ---------------------------------------
+
 
 // #region : Number Button Functions
 
@@ -150,6 +175,7 @@ function click9(){
 }
 // #endregion
 
+
 // #region : Operator Button Functions
 
 function clickAdd(){
@@ -158,6 +184,7 @@ function clickAdd(){
         type: 'operator'
     });
     $('#input-equation').val($('#input-equation').val() + ' + ');
+    disableOperators()
 }
 function clickSubtract(){
     equationArray.push({
@@ -165,6 +192,7 @@ function clickSubtract(){
         type: 'operator'
     });
     $('#input-equation').val($('#input-equation').val() + ' - ');
+    disableOperators()
 }
 function clickMultiply(){
     equationArray.push({
@@ -172,6 +200,7 @@ function clickMultiply(){
         type: 'operator'
     });
     $('#input-equation').val($('#input-equation').val() + ' * ');
+    disableOperators()
 }
 function clickDivide(){
     equationArray.push({
@@ -179,6 +208,7 @@ function clickDivide(){
         type: 'operator'
     });
     $('#input-equation').val($('#input-equation').val() + ' / ');
+    disableOperators()
 }
 function clickDecimal(){
     equationArray.push({
@@ -189,15 +219,33 @@ function clickDecimal(){
 }
 
 function clickClear() {
+    // Clears the input and equation array
     $('#input-equation').val('');
     equationArray = [];
-    console.log('equationArray', equationArray);
-    
+    enableOperators()
 }
+
+function disableOperators(){
+    $('#btn-add').prop('disabled', true);
+    $('#btn-subtract').prop('disabled', true);
+    $('#btn-multiply').prop('disabled', true);
+    $('#btn-divide').prop('disabled', true);
+}
+
+function enableOperators(){
+    $('#btn-add').prop('disabled', false);
+    $('#btn-subtract').prop('disabled', false);
+    $('#btn-multiply').prop('disabled', false);
+    $('#btn-divide').prop('disabled', false);
+}
+
 // #endregion
+
 
 function renderToDom(res){
     console.log('in renderToDom');
+    console.log('res:', res);
+    
     
     // Grabs the last value in the flat array (aka: latest result)
     latestResult = res.flat()[res.flat().length-1]    
@@ -209,6 +257,6 @@ function renderToDom(res){
     // empty math history list & re-append updated history list
     $('#math-history').empty();
     for (let index of res){
-        $('#math-history').append(`<li>${index[0]} ${index[1]} ${index[2]}</li>`);
+        $('#math-history').prepend(`<li>${index[0]} ${index[1]} ${index[2]}</li>`);
     }
 }

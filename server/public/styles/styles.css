@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'digital-7';
+    src: url('../fonts/digital-7.ttf');
+}
+
 * {
     font-family: Helvetica, Arial, sans-serif;
 }
@@ -20,5 +25,32 @@ input {
     height: 45px;
     width: 163px;
     margin: 3px;
+}
 
+input, textarea {
+    background-color: #c8ccbc;
+    font-family: 'digital-7';
+    font-size: 28px;
+  }
+
+#calc-inner {
+    margin: 20px;
+    text-align: center;
+}
+
+#calc-outer {
+    background-color: #2e2e2e;
+    border: 1px black solid;
+    border-radius: 15px;
+    width: 290px;
+    margin: auto;
+}
+
+#calc-title {
+    font-family: 'digital-7';
+    font-size: 30px;
+    color: #c8ccbc;
+    padding: 20px, 0px, 20px, 0px;
+    border-top: 2px solid #c8ccbc;
+    border-bottom: 2px solid #c8ccbc;
 }
