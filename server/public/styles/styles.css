@@ -54,3 +54,9 @@ input, textarea {
     border-top: 2px solid #c8ccbc;
     border-bottom: 2px solid #c8ccbc;
 }
+
+#btn-clear-history {
+    height: auto;
+    width: auto;
+    padding: 15px;
+}

@@ -9,6 +9,8 @@ GOALS:
 
     GETs are used to, well, get information from the server. POSTs are used to send new info to the server. DELETEs are used for, you guessed it, deleting info already on the server.
 
+-------------------------------------------------
+
 - Allow a user to click on an entry in the History list to re-run that calculation. This should display the answer on the calculator interface like a normal calculation.
 
     Anticipating a user's wants and adding the feature in the interface is often a logical progression that ends up in stretch goals for project.

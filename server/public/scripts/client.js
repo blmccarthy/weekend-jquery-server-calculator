@@ -27,10 +27,6 @@ function readyNow(){
 
 }
 
-let arr = [[2, 4],[6, 8]];
-let arrFlat = arr.flat();
-console.log('arrFlat:', arrFlat);
-
 
 //// GLOBAL VARS //// -------------------------------------------
 
@@ -60,10 +56,11 @@ function receiveAnswer(){
 
 function sendInputs(){
     console.log('sendInputs clicked');
-
+    console.log('equationArray:', equationArray);
     
-    for (let i of equationArray){
-
+    // Ensure's equation is valid before sending to server
+    if (inputValidation() === false){
+        return alert('Please ensure you entered a valid equation!');
     }
 
     $.ajax({
@@ -258,5 +255,34 @@ function renderToDom(res){
     $('#math-history').empty();
     for (let index of res){
         $('#math-history').prepend(`<li>${index[0]} ${index[1]} ${index[2]}</li>`);
+    }
+}
+
+function inputValidation(){
+    let num1Exist = false;      // does 1st num exist?
+    let operatorExist = false;  // does operator exist?
+    let num2Exist = false;      // does 2nd num exist AFTER operator?
+    let operatorIndex = 0;
+    // Validates 1st digit in array is a number
+    if (equationArray[0].type === 'number'){
+        num1Exist = true;
+    }
+    // Validates that operator exists in array
+    for (let i = 0; i < equationArray.length; i++){
+        if (equationArray[i].type === 'operator'){
+            operatorExist = true;
+            operatorIndex = i;
+        }
+    }
+    // Validates that the operator isn't LAST digit in array
+    if (operatorIndex < equationArray.length-1){        
+        num2Exist = true;
+    }
+    // Validates that ALL validations are true
+    if (num1Exist && operatorExist && num2Exist){
+        return true;
+    } else {
+        console.log(num1Exist, operatorExist, num2Exist);
+        return false;
     }
 }

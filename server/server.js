@@ -62,8 +62,7 @@ app.post('/sendInputs', function(req, res){
 app.delete('/deleteHistory', function(req, res){
     console.log('in /deleteHistory DELETE');
     mathHistory = [];
-    res.sendStatus(201)
-    
+    res.send(mathHistory)
 });
 
 //// HELPER FUNCTIONS //// ---------------------------------------
