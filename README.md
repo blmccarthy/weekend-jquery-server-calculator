@@ -13,7 +13,7 @@ In this project, we tackled creating a calculator app that handled all calculati
 - Provide user freedom to enter equation, but safegaurds in case user enters bad data
 - Provide interactive list history
 
-To see the fully functional site, please visit: [DEPLOYED VERSION OF APP](www.heroku.com)
+To see the fully functional site, please visit: [DEPLOYED VERSION OF APP](https://prime-server-calculator.herokuapp.com/)
 
 
 ## Screen Shots
